@@ -9,3 +9,11 @@ to open the /boot/config.txt file for editing. Then scroll down to the bottom of
 
 dtoverlay=w1-gpio
 Ctrl-X to save the amended file.
+
+Raspberry Pi video Settings:
+hdmi_force_hotplug=1   
+
+hdmi_group=1 
+
+hdmi_mode=16
+

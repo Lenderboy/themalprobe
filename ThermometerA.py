@@ -4,7 +4,16 @@ import send_to_text
 import time
 from ubidots import ApiClient
 import ubidots
+import os 
+from dotenv import dotenv
 
+load_dotenv()  # Loads variables from .env into the environment
+
+UBIDOTS_TOKEN = os.getenv(UBIDOTS_TOKEN)
+UBIDOTS_VARIABLE_1= os.getenv(UBIDOTS_VARIABLE_1)
+UBIDOTS_VARIABLE_2= os.getenv(UBIDOTS_VARIABLE_2)
+
+#id is the id from thermal probe
 
 def main():
     # Script has been called directly
@@ -48,7 +57,7 @@ def ubidots_send(c):
         error_report_twilio_message('Lab Vaccine has gone through loop {} times of 5'.format(message_send_count))
         try:
             print "Requesting Ubidots token"
-            api = ApiClient(token='XXXXXX7fSg6sctIKMn')
+            api = ApiClient(token=UBIDOTS_TOKEN)
             print 'retrieved token'
 
         except:
@@ -57,12 +66,12 @@ def ubidots_send(c):
             error_report_twilio_message('Lab Fridge has not connected to the internet-retrying')
             continue
 
-        my_variable_C = api.get_variable('XXXXXXXXXXXXXX98dfb')
+        my_variable_C = api.get_variable(UBIDOTS_VARIABLE_1)
 
         while (1):
             # response = my_variable_C.save_value({"value": c})  # for sending a single variable
-            response = api.save_collection([{'variable': 'XXXXXXXXXXXXXX98dfb', 'value': c},
-                                            {'variable': 'XXXXXXXXXXXXXXXXXf9f98', 'value': (32 + (1.8 * c))}])
+            response = api.save_collection([{'variable': UBIDOTS_VARIABLE_1, 'value': c},
+                                            {'variable': UBIDOTS_VARIABLE_2, 'value': (32 + (1.8 * c))}])
             print response
 				#todo add if statement to send message outside temperature ratings.
 				#todo might need a max message count

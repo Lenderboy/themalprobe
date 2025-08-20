@@ -1,17 +1,16 @@
 from twilio.rest import TwilioRestClient
 import twilio
 import datetime
+import os
+from dotenv import load_dotenv
 
+load_dotenv()  # Loads variables from .env into the environment
 
 
 #  KMK MD Account
-ACCOUNT_SID = "XXXXXXXXXXXXXXXXXXX6f51cd"
-AUTH_TOKEN = "XXXXXXXXXXXXXXXXXXXXXXe50ff"
-
-# TESTING Account
-TESTING_ACCOUNT_SID = 'XXXXXXXXXXXXXXXXXXXXXXXXXXX9a0f'
-TESTING_AUTH_TOKEN = 'XXXXXXXXXXXXXXXXXXXXXXXXXXe97a0d'
-TESTING_FROM_NUMBER = '+15005550006'	 # (use this From_:This number passes all validation. No error
+ACCOUNT_SID = os.getenv(ACCOUNT_SID)
+AUTH_TOKEN = os.getenv(AUTH_TOKEN)
+PHONE_ALERT = os.getenv(PHONE_ALERT)
 
 
 # # Lenderboy account
@@ -24,5 +23,5 @@ client = TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN)
 def error_report_twilio_message(error):
     client.messages.create(
         body='Hello, this is your Vaccine Fridge. The notice is: {}. This happened at {}. '.format(error, datetime.datetime.now()),
-        to='5038XXXXXX',
-        messaging_service_sid="XXXXXXXXXXXXXXXXXXXXXXXXXX770d7dd")
+        to= PHONE_ALERT
+        messaging_service_sid=ACCOUNT_SID
